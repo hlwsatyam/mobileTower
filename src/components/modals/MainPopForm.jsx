@@ -62,7 +62,7 @@ export default function ApplyNowModal({ isOpen, setIsOpen }) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/apply",
+        "https://jio-tower-bakcned-2.onrender.com/apply",
         formData
       );
       console.log(response);
