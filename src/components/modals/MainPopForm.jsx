@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import axios from "axios";
+import { CgClose } from "react-icons/cg";
 
 export default function ApplyNowModal({ isOpen, setIsOpen }) {
-  
   const [formData, setFormData] = useState({
     ownerName: "",
     mobileNumber: "",
@@ -17,12 +17,13 @@ export default function ApplyNowModal({ isOpen, setIsOpen }) {
   });
 
   const [loading, setLoading] = useState(false);
+  const [postOffices, setPostOffices] = useState([]);
+  const [formSubmitted, setFormSubmitted] = useState(false); // State to track form submission
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Automatically fetch address data when pincode changes
     if (name === "pinCode" && value.length === 6) {
       fetchAddress(value);
     }
@@ -36,15 +37,19 @@ export default function ApplyNowModal({ isOpen, setIsOpen }) {
       );
       const data = response.data[0];
       if (data.Status === "Success") {
-        const postOffice = data.PostOffice[0];
+        const postOffices = data.PostOffice;
+        setPostOffices(postOffices);
+        const postOffice = postOffices[0];
         setFormData((prevData) => ({
           ...prevData,
           district: postOffice.District,
           state: postOffice.State,
           country: postOffice.Country,
+          postOffice: postOffice.Name,
         }));
       } else {
         alert("Invalid Pincode. Please try again.");
+        setPostOffices([]);
       }
     } catch (error) {
       console.error("Error fetching address:", error);
@@ -60,42 +65,50 @@ export default function ApplyNowModal({ isOpen, setIsOpen }) {
         "http://localhost:5000/apply",
         formData
       );
-      alert("Application submitted successfully!");
-      setIsOpen(false);
+      console.log(response);
+      setFormSubmitted(true); // Set formSubmitted to true
     } catch (error) {
       console.error("Error submitting application:", error);
       alert("There was an issue submitting the application.");
     }
   };
 
-  return (
-    <>
-      <Transition appear show={isOpen} as={React.Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => setIsOpen(false)}
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
+  const handleClose = () => {
+    setFormSubmitted(false); // Reset form submission state on close
+    setIsOpen(false);
+  };
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <Transition.Child
-                as={React.Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-3xl bg-gradient-to-br from-blue-100 to-indigo-200 p-8 shadow-xl">
+  return (
+    <Transition appear show={isOpen} as={React.Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={handleClose}>
+        <div className="fixed inset-0 bg-black bg-opacity-50" />
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4">
+            <Transition.Child
+              as={React.Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-3xl bg-gradient-to-br from-blue-100 to-indigo-200 p-8 shadow-xl">
+                {!formSubmitted && (
                   <Dialog.Title
                     as="h3"
                     className="text-2xl font-bold leading-6 text-indigo-900 text-center mb-4"
                   >
                     Apply Now | आवेदन करें
+                    <CgClose
+                      onClick={handleClose}
+                      className="absolute top-2 right-2 text-2xl text-gray-500 cursor-pointer"
+                    />
                   </Dialog.Title>
+                )}
+
+                {/* Show form if not submitted */}
+                {!formSubmitted ? (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {[
                       {
@@ -118,11 +131,6 @@ export default function ApplyNowModal({ isOpen, setIsOpen }) {
                         label: "Site Location Pin Code",
                         placeholder: "Enter the pin code",
                       },
-                    //   {
-                    //     name: "postOffice",
-                    //     label: "Post Office Name",
-                    //     placeholder: "Enter the post office name",
-                    //   },
                     ].map((field, idx) => (
                       <div key={idx}>
                         <label className="block text-sm font-medium text-indigo-800">
@@ -139,6 +147,25 @@ export default function ApplyNowModal({ isOpen, setIsOpen }) {
                         />
                       </div>
                     ))}
+                    {postOffices.length > 0 && (
+                      <div>
+                        <label className="block text-sm font-medium text-indigo-800">
+                          Select Post Office
+                        </label>
+                        <select
+                          name="postOffice"
+                          value={formData.postOffice}
+                          onChange={handleChange}
+                          className="mt-1 block py-4 px-2 w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        >
+                          {postOffices.map((postOffice, index) => (
+                            <option key={index} value={postOffice.Name}>
+                              {postOffice.Name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                     {["district", "state", "country"].map((field) => (
                       <div key={field}>
                         <label className="block text-sm font-medium text-indigo-800">
@@ -168,18 +195,34 @@ export default function ApplyNowModal({ isOpen, setIsOpen }) {
                     </div>
                     <button
                       type="submit"
-                      className="w-full py-4 px-2 bg-gradient-to-r from-green-400 to-teal-600 text-white  rounded-lg shadow-lg hover:opacity-90 transition"
+                      className="w-full py-4 px-2 bg-gradient-to-r from-green-400 to-teal-600 text-white rounded-lg shadow-lg hover:opacity-90 transition"
                       disabled={loading}
                     >
                       {loading ? "Fetching Address..." : "Submit Application"}
                     </button>
                   </form>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+                ) : (
+                  // Show success message with "Call Now" button
+                  <div className="text-center">
+                    <p className="text-lg font-semibold text-indigo-900">
+                      Your form has been submitted successfully!
+                    </p>
+                    <p className="mt-4 text-md text-indigo-700">
+                      Contact us now for any inquiries!
+                    </p>
+                    <button
+                      onClick={() => alert("Calling...")} // You can replace this with actual call functionality
+                      className="mt-6 py-3 px-6 bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-lg hover:opacity-90 transition"
+                    >
+                      Call Now
+                    </button>
+                  </div>
+                )}
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
-        </Dialog>
-      </Transition>
-    </>
+        </div>
+      </Dialog>
+    </Transition>
   );
 }

@@ -29,7 +29,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="bg-gradient-to-r from-blue-50 to-indigo-100 py-16">
+    <section id="jio" className="bg-gradient-to-r from-blue-50 to-indigo-100 py-16">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">
           Why Choose Reliance Jio for Tower Installation?

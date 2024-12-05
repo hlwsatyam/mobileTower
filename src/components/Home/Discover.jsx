@@ -62,7 +62,7 @@ function Discover() {
                 ],
               },
             ].map((service, i) => (
-              <div key={i} className="p-6 bg-white shadow-lg rounded-lg">
+              <div  key={i} className="p-6 bg-white shadow-lg rounded-lg">
                 <h3 className="text-xl font-bold mb-4">{service.name}</h3>
                 <p className="text-lg text-gray-700 mb-4">
                   {service.description}
@@ -72,65 +72,9 @@ function Discover() {
                     <li key={j}>✔ {benefit}</li>
                   ))}
                 </ul>
-                <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold">
+                <button id="benefits" className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold">
                   Learn More
                 </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Success Stories
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                name: "Arjun Mehta",
-                feedback: "Monthly income without any hassles.",
-              },
-              {
-                name: "Priya Singh",
-                feedback: "Professional and trustworthy partnership.",
-              },
-              {
-                name: "Vikram Rao",
-                feedback: "Great use of unused property space.",
-              },
-            ].map((story, i) => (
-              <div key={i} className="p-6 bg-white shadow-md rounded-lg">
-                <p className="text-gray-600 italic">“{story.feedback}”</p>
-                <h4 className="mt-4 font-semibold">{story.name}</h4>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-2 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Real-Life Transformations
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "From Vacant Land to Monthly Income",
-                summary: "A small plot in Delhi now generates ₹50,000 monthly.",
-              },
-              {
-                title: "Urban Rooftop Solution",
-                summary: "Unused rooftop in Mumbai creates consistent revenue.",
-              },
-            ].map((caseStudy, i) => (
-              <div key={i} className="p-6 bg-white shadow-lg rounded-lg">
-                <h3 className="text-xl font-semibold mb-4">
-                  {caseStudy.title}
-                </h3>
-                <p className="text-gray-600">{caseStudy.summary}</p>
               </div>
             ))}
           </div>

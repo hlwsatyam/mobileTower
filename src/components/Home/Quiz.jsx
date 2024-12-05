@@ -1,16 +1,16 @@
 import { quiz_illustration } from "../../assets/home";
 import Container from "../Container";
 
-export default function () {
+export default function ({isOpen,setIsOpen}) {
   return (
     <section className="my-14">
       <Container>
         <div className="bg-quiz-bg h-auto sm:bg-cover bg-center bg-no-repeat bg-[#6D9886] rounded-xl relative">
           <article className="py-24 md:px-14 px-4 md:w-9/12 md:mx-0 mx-auto md:text-left text-center leading-none">
             <h1 className="font-bold lg:text-[60px] text-[50px] text-white pb-8">
-              Start Discovering with our Interactive Quiz
+            बिना किसी निवेश के हर महीने किराया कमाएं।
             </h1>
-            <button className="capitalize bg-button-primary hover:bg-button-primary-hover transition-colors px-14 py-3 rounded-sm font-bold text-[#6C6252]">
+            <button onClick={()=>setIsOpen(!isOpen)} className="capitalize bg-button-primary hover:bg-button-primary-hover transition-colors px-14 py-3 rounded-sm font-bold text-[#6C6252]">
               Lets start
             </button>
           </article>

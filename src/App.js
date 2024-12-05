@@ -8,10 +8,10 @@ function App() {
   const [isFormOpen, setIsFormOpen] = useState(true)
   return (
     <div className="App">
-      {isFormOpen && <ApplyNowModal isOpen={isFormOpen} setIsOpen={setIsFormOpen}  />}
-      <Navbar />
+      {isFormOpen && <ApplyNowModal isOpen={isFormOpen} setIsOpen={setIsFormOpen} />}
+      <Navbar isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen} />
       <MyRoutes isOpen={isFormOpen} setIsOpen={setIsFormOpen} />
-      <Footer />
+      <Footer isOpen={isFormOpen} setIsOpen={setIsFormOpen} />
     </div>
   );
 }

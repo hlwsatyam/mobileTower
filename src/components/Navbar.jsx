@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { logo } from "../assets/home";
 import Container from "./Container";
 
-function Navbar() {
+function Navbar({ isFormOpen, setIsFormOpen }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -11,63 +10,70 @@ function Navbar() {
       <Container>
         <div className="flex items-center justify-between h-16">
           <div className="flex gap-4 items-center">
-            <img className="h-[40px] w-[120px]" src={logo} alt="Workflow" />
+            <img
+              className="h-[40px] cursor-pointer  w-[120px]"
+              src={
+                "https://media.licdn.com/dms/image/v2/D4E22AQGPm9Yn-om5Hw/feedshare-shrink_800/feedshare-shrink_800/0/1718646445687?e=2147483647&v=beta&t=E7-F_PlPZ8bI1Jj_HJlLDBYnWtfFjS3RbcsGZComa-s"
+              }
+              onClick={() => setIsFormOpen(!isFormOpen)}
+              alt="Workflow"
+            />
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <Link
-                  to="/"
+                <a
+                  href="#home"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Home
-                </Link>
-                <Link
-                  to="/about"
+                </a>
+                {/* <a
+                  href="#about"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   About Us
-                </Link>
-                <Link
-                  to="/eligibility-criteria"
+                </a> */}
+                <a
+                  href="#eligibility"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Eligibility Criteria
-                </Link>
-                <Link
-                  to="/benefits"
+                </a>
+                <a
+                  href="#benefits"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Benefits
-                </Link>
-                <Link
-                  to="/application-process"
+                </a>
+                <a
+                  href="#application"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Application Process
-                </Link>
-                <Link
-                  to="/why-choose-jio"
+                </a>
+                <a
+                  href="#jio"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Why Choose Jio?
-                </Link>
-                <Link
-                  to="/testimonials"
+                </a>
+                <a
+                  href="#testimonials"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Testimonials
-                </Link>
-                <Link
-                  to="/faqs"
+                </a>
+                <a
+                  href="#faqs"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   FAQs
-                </Link>
-                <Link
-                  to="/contact-us"
+                </a>
+                <a
+                  href="#contact"
                   className="hover:bg-button-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Contact Us
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -89,60 +95,60 @@ function Navbar() {
         {isOpen && (
           <div className="md:hidden transition-all" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-black">
-              <Link
-                to="/"
+              <a
+                href="#home"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Home
-              </Link>
-              <Link
-                to="/about"
+              </a>
+              {/* <a
+                href="#about"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 About Us
-              </Link>
-              <Link
-                to="/eligibility-criteria"
+              </a> */}
+              <a
+                href="#eligibility-criteria"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Eligibility Criteria
-              </Link>
-              <Link
-                to="/benefits"
+              </a>
+              <a
+                href="#benefits"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Benefits
-              </Link>
-              <Link
-                to="/application-process"
+              </a>
+              <a
+                href="#application-process"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Application Process
-              </Link>
-              <Link
-                to="/why-choose-jio"
+              </a>
+              <a
+                href="#why-choose-jio"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Why Choose Jio?
-              </Link>
-              <Link
-                to="/testimonials"
+              </a>
+              <a
+                href="#testimonials"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Testimonials
-              </Link>
-              <Link
-                to="/faqs"
+              </a>
+              <a
+                href="#faqs"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 FAQs
-              </Link>
-              <Link
-                to="/contact-us"
+              </a>
+              <a
+                href="#contact-us"
                 className="hover:bg-primary-base hover:bg-button-primary hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Contact Us
-              </Link>
+              </a>
             </div>
           </div>
         )}

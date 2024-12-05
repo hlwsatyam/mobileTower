@@ -21,7 +21,7 @@ export default function Admin({isOpen, setIsOpen}) {
   // Fetch data from the backend
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://your-backend-url.com/api/data"); // Replace with your backend API
+      const response = await axios.get("http://localhost:5000/data"); // Replace with your backend API
       setData(response.data);
     } catch (err) {
       console.error("Error fetching data", err);
@@ -84,39 +84,49 @@ export default function Admin({isOpen, setIsOpen}) {
             </button>
           </div>
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Fetched Data</h2>
-            <div className="overflow-x-auto">
-              <table className="table-auto w-full text-left">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-2 border-b-2">ID</th>
-                    <th className="px-4 py-2 border-b-2">Name</th>
-                    <th className="px-4 py-2 border-b-2">Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.length > 0 ? (
-                    data.map((item) => (
-                      <tr key={item.id} className="hover:bg-gray-700">
-                        <td className="px-4 py-2 border-b">{item.id}</td>
-                        <td className="px-4 py-2 border-b">{item.name}</td>
-                        <td className="px-4 py-2 border-b">{item.email}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan="3"
-                        className="text-center px-4 py-2 border-b"
-                      >
-                        No Data Found
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+  <h2 className="text-2xl font-bold mb-4">Fetched Data</h2>
+  <div className="overflow-x-auto">
+    <table className="table-auto w-full text-left">
+      <thead>
+        <tr>
+          <th className="px-4 py-2 border-b-2">ID</th>
+          <th className="px-4 py-2 border-b-2">Name</th>
+          <th className="px-4 py-2 border-b-2">Email</th>
+          <th className="px-4 py-2 border-b-2">Phone</th>
+          <th className="px-4 py-2 border-b-2">Address</th>
+          <th className="px-4 py-2 border-b-2">City</th>
+          <th className="px-4 py-2 border-b-2">State</th>
+          <th className="px-4 py-2 border-b-2">Country</th>
+          {/* Add more fields here as per your data */}
+        </tr>
+      </thead>
+      <tbody>
+        {data.length > 0 ? (
+          data.map((item) => (
+            <tr key={item.id} className="hover:bg-gray-700">
+              <td className="px-4 py-2 border-b">{item.id}</td>
+              <td className="px-4 py-2 border-b">{item.name}</td>
+              <td className="px-4 py-2 border-b">{item.email}</td>
+              <td className="px-4 py-2 border-b">{item.phone}</td>
+              <td className="px-4 py-2 border-b">{item.address}</td>
+              <td className="px-4 py-2 border-b">{item.city}</td>
+              <td className="px-4 py-2 border-b">{item.state}</td>
+              <td className="px-4 py-2 border-b">{item.country}</td>
+              {/* Add more fields here if necessary */}
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="8" className="text-center px-4 py-2 border-b">
+              No Data Found
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
         </div>
       )}
     </div>

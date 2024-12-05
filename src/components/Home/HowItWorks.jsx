@@ -32,7 +32,7 @@ const items = [
 
 export default function HowItWorks() {
   return (
-    <section className="my-14">
+    <section id="application" className="my-14">
       <Container>
         <SectionTitle title="how it works" />
         <div className="bg-[#D9CAB3] bg-opacity-30 px-8 py-14 rounded-md mt-8">
